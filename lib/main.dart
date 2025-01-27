@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_reminder/Screens/HomeScreen.dart';
 import 'package:flutter_reminder/services/UiProvider.dart';
 import 'package:flutter_reminder/screens/SettingScreen.dart';
 import 'package:provider/provider.dart';
@@ -38,7 +39,7 @@ class MyApp extends StatelessWidget {
               useMaterial3: true,
             ),
 
-            home: SettingScreen(title: 'Settings'),
+            home: HomeScreen(title: 'Home'),
 
           );
         },
