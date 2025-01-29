@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:table_calendar/table_calendar.dart';
 
-class CalendarScreen extends StatefulWidget {
+import '../utils/DatabaseHelper.dart';
 
+
+class CalendarScreen extends StatefulWidget {
   final String title;
 
   const CalendarScreen({super.key, required this.title});
@@ -12,16 +14,33 @@ class CalendarScreen extends StatefulWidget {
 }
 
 class _CalendarScreenState extends State<CalendarScreen> {
-  // Calendar controller
+  // Calendar variables
   CalendarFormat _calendarFormat = CalendarFormat.month;
   DateTime _focusedDay = DateTime.now();
   DateTime? _selectedDay;
 
-  // Events map (key: date, value: list of events)
+  // Events map
   final Map<DateTime, List<String>> _events = {};
 
-  // Text controller for adding events
+  // SQLite helper
+  final DatabaseHelper _dbHelper = DatabaseHelper();
+
+  // Text controller
   final TextEditingController _eventController = TextEditingController();
+
+  @override
+  void initState() {
+    super.initState();
+    _loadEvents();
+  }
+
+  Future<void> _loadEvents() async {
+    final now = DateTime.now();
+    final events = await _dbHelper.getEvents(now.toIso8601String());
+    setState(() {
+      _events[now] = events.map((e) => e['event'] as String).toList();
+    });
+  }
 
   @override
   void dispose() {
@@ -37,17 +56,22 @@ class _CalendarScreenState extends State<CalendarScreen> {
       ),
       body: Column(
         children: [
-          // Calendar Widget
+          // Calendar widget
           TableCalendar(
             firstDay: DateTime.utc(2020, 1, 1),
             lastDay: DateTime.utc(2030, 12, 31),
             focusedDay: _focusedDay,
             calendarFormat: _calendarFormat,
             selectedDayPredicate: (day) => isSameDay(_selectedDay, day),
-            onDaySelected: (selectedDay, focusedDay) {
+            onDaySelected: (selectedDay, focusedDay) async {
               setState(() {
                 _selectedDay = selectedDay;
                 _focusedDay = focusedDay;
+              });
+              final formattedDate = selectedDay.toIso8601String();
+              final events = await _dbHelper.getEvents(formattedDate);
+              setState(() {
+                _events[selectedDay] = events.map((e) => e['event'] as String).toList();
               });
             },
             onFormatChanged: (format) {
@@ -62,7 +86,7 @@ class _CalendarScreenState extends State<CalendarScreen> {
           ),
           const SizedBox(height: 16),
 
-          // Display Events for Selected Day
+          // Display events
           Expanded(
             child: _selectedDay == null
                 ? const Center(child: Text('Select a day to view events'))
@@ -73,13 +97,18 @@ class _CalendarScreenState extends State<CalendarScreen> {
                   title: Text(_events[_selectedDay]![index]),
                   trailing: IconButton(
                     icon: const Icon(Icons.delete),
-                    onPressed: () {
-                      setState(() {
-                        _events[_selectedDay]!.removeAt(index);
-                        if (_events[_selectedDay]!.isEmpty) {
-                          _events.remove(_selectedDay);
-                        }
-                      });
+                    onPressed: () async {
+                      final formattedDate = _selectedDay!.toIso8601String();
+                      final eventList = await _dbHelper.getEvents(formattedDate);
+                      if (eventList.isNotEmpty) {
+                        await _dbHelper.deleteEvent(eventList[index]['id']);
+                        setState(() {
+                          _events[_selectedDay]!.removeAt(index);
+                          if (_events[_selectedDay]!.isEmpty) {
+                            _events.remove(_selectedDay);
+                          }
+                        });
+                      }
                     },
                   ),
                 );
@@ -95,7 +124,6 @@ class _CalendarScreenState extends State<CalendarScreen> {
     );
   }
 
-  // Dialog to add an event
   void _showAddEventDialog() {
     showDialog(
       context: context,
@@ -113,8 +141,10 @@ class _CalendarScreenState extends State<CalendarScreen> {
             child: const Text('Cancel'),
           ),
           TextButton(
-            onPressed: () {
+            onPressed: () async {
               if (_eventController.text.isNotEmpty && _selectedDay != null) {
+                final formattedDate = _selectedDay!.toIso8601String();
+                await _dbHelper.insertEvent(formattedDate, _eventController.text);
                 setState(() {
                   if (_events[_selectedDay!] == null) {
                     _events[_selectedDay!] = [];
