@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_reminder/screens/DashbordScreen.dart';
+import 'package:flutter_reminder/screens/NotificationScreen.dart';
 import 'package:flutter_reminder/screens/SettingScreen.dart';
+
+import 'CalendarScreen.dart';
 
 class HomeScreen extends StatefulWidget {
  
@@ -76,21 +79,21 @@ class _HomeScreenState extends State<HomeScreen> {
                   //   ),
                   // );
                 }
-                else if (items[index] == 'People') {
-                  // Navigator.push(
-                  //   context,
-                  //   MaterialPageRoute(
-                  //     builder: (context) => const Peoplescreen(title: 'People'),
-                  //   ),
-                  // );
+                else if (items[index] == 'Notifications') {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => const NotificationScreen(title: 'Notifications'),
+                    ),
+                  );
                 }
-                else if (items[index] == 'Battery') {
-                  // Navigator.push(
-                  //   context,
-                  //   MaterialPageRoute(
-                  //     builder: (context) => const Batteryscreen(title: 'Battery'),
-                  //   ),
-                  // );
+                else if (items[index] == 'Calendar') {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => const CalendarScreen(title: 'Event Reminder Calendar'),
+                    ),
+                  );
                 }
                 else if (items[index] == 'Settings') {
                   Navigator.push(
