@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_reminder/screens/ClassScheduleManagementScreen.dart';
 import 'package:flutter_reminder/screens/DashbordScreen.dart';
 import 'package:flutter_reminder/screens/NotificationScreen.dart';
 import 'package:flutter_reminder/screens/SettingScreen.dart';
+import 'package:flutter_reminder/widgets/CustomDrawer.dart';
 
 import 'CalendarScreen.dart';
 
@@ -29,6 +31,7 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      drawer: CustomDrawer(),
       appBar:AppBar(
         title: Text(widget.title),
         actions: <Widget>[
@@ -71,13 +74,13 @@ class _HomeScreenState extends State<HomeScreen> {
                       builder: (context) => const DashboardScreen(title: 'Dashboard'),
                     ),
                   );
-                } else if (items[index] == 'Messages') {
-                  // Navigator.push(
-                  //   context,
-                  //   MaterialPageRoute(
-                  //     builder: (context) => const MessageScreen(title: 'Message'),
-                  //   ),
-                  // );
+                } else if (items[index] == 'Class Schedule Management') {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => const ClassScheduleManagementScreen(title: 'Class Schedule Management'),
+                    ),
+                  );
                 }
                 else if (items[index] == 'Notifications') {
                   Navigator.push(
