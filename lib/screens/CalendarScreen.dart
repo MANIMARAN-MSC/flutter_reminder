@@ -119,7 +119,66 @@ class _CalendarScreenState extends State<CalendarScreen> {
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: () => _showAddEventDialog(),
+        // onPressed: () => _showAddEventBottomSheet(),
         child: const Icon(Icons.add),
+      ),
+    );
+  }
+
+  void _showAddEventBottomSheet() {
+    showModalBottomSheet(
+      context: context,
+      shape: const RoundedRectangleBorder(
+        borderRadius: BorderRadius.vertical(top: Radius.circular(16.0)),
+      ),
+      builder: (context) => Padding(
+        padding: const EdgeInsets.all(16.0),
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            Text(
+              'Add Event',
+              // style: Theme.of(context).textTheme.headline6,
+            ),
+            const SizedBox(height: 10),
+            TextField(
+              controller: _eventController,
+              decoration: const InputDecoration(
+                labelText: 'Event Name',
+                border: OutlineInputBorder(),
+              ),
+            ),
+            const SizedBox(height: 10),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.end,
+              children: [
+                TextButton(
+                  onPressed: () {
+                    Navigator.pop(context);
+                  },
+                  child: const Text('Cancel'),
+                ),
+                ElevatedButton(
+                  onPressed: () async {
+                    if (_eventController.text.isNotEmpty && _selectedDay != null) {
+                      final formattedDate = _selectedDay!.toIso8601String();
+                      await _dbHelper.insertEvent(formattedDate, _eventController.text);
+                      setState(() {
+                        if (_events[_selectedDay!] == null) {
+                          _events[_selectedDay!] = [];
+                        }
+                        _events[_selectedDay!]!.add(_eventController.text);
+                        _eventController.clear();
+                      });
+                      Navigator.pop(context);
+                    }
+                  },
+                  child: const Text('Add'),
+                ),
+              ],
+            ),
+          ],
+        ),
       ),
     );
   }
