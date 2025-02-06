@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
-class Subject extends StatefulWidget {
-  const Subject({super.key});
+class SubjectScreen extends StatefulWidget {
+  const SubjectScreen({super.key});
 
   @override
-  State<Subject> createState() => _SubjectState();
+  State<SubjectScreen> createState() => _SubjectScreenState();
 }
 
-class _SubjectState extends State<Subject> {
+class _SubjectScreenState extends State<SubjectScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(

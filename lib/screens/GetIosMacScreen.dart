@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
 
-class GetIosMac extends StatefulWidget {
-  const GetIosMac({super.key});
+class GetIosMacScreen extends StatefulWidget {
+  const GetIosMacScreen({super.key});
 
   @override
-  State<GetIosMac> createState() => _GetIosMacState();
+  State<GetIosMacScreen> createState() => _GetIosMacScreenState();
 }
 
-class _GetIosMacState extends State<GetIosMac> {
+class _GetIosMacScreenState extends State<GetIosMacScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(

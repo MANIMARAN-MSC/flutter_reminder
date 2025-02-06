@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
-class Recordings extends StatefulWidget {
-  const Recordings({super.key});
+class RecordingsScreen extends StatefulWidget {
+  const RecordingsScreen({super.key});
 
   @override
-  State<Recordings> createState() => _RecordingsState();
+  State<RecordingsScreen> createState() => _RecordingsScreenState();
 }
 
-class _RecordingsState extends State<Recordings> {
+class _RecordingsScreenState extends State<RecordingsScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(

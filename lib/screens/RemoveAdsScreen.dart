@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
-class RemoveAds extends StatefulWidget {
-  const RemoveAds({super.key});
+class RemoveAdsScreen extends StatefulWidget {
+  const RemoveAdsScreen({super.key});
 
   @override
-  State<RemoveAds> createState() => _RemoveAdsState();
+  State<RemoveAdsScreen> createState() => _RemoveAdsScreenState();
 }
 
-class _RemoveAdsState extends State<RemoveAds> {
+class _RemoveAdsScreenState extends State<RemoveAdsScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(

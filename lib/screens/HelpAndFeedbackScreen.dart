@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
-class HelpAndFeedback extends StatefulWidget {
-  const HelpAndFeedback({super.key});
+class HelpAndFeedbackScreen extends StatefulWidget {
+  const HelpAndFeedbackScreen({super.key});
 
   @override
-  State<HelpAndFeedback> createState() => _HelpAndFeedbackState();
+  State<HelpAndFeedbackScreen> createState() => _HelpAndFeedbackScreenState();
 }
 
-class _HelpAndFeedbackState extends State<HelpAndFeedback> {
+class _HelpAndFeedbackScreenState extends State<HelpAndFeedbackScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(

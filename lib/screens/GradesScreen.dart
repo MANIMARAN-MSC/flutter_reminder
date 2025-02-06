@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
-class Grades extends StatefulWidget {
-  const Grades({super.key});
+class GradesScreen extends StatefulWidget {
+  const GradesScreen({super.key});
 
   @override
-  State<Grades> createState() => _GradesState();
+  State<GradesScreen> createState() => _GradesScreenState();
 }
 
-class _GradesState extends State<Grades> {
+class _GradesScreenState extends State<GradesScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(

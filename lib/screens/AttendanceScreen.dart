@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
-class Attendance extends StatefulWidget {
-  const Attendance({super.key});
+class AttendanceScreen extends StatefulWidget {
+  const AttendanceScreen({super.key});
 
   @override
-  State<Attendance> createState() => _AttendanceState();
+  State<AttendanceScreen> createState() => _AttendanceScreenState();
 }
 
-class _AttendanceState extends State<Attendance> {
+class _AttendanceScreenState extends State<AttendanceScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(

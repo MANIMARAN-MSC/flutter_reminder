@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
-class TimeTable extends StatefulWidget {
-  const TimeTable({super.key});
+class TimeTableScreen extends StatefulWidget {
+  const TimeTableScreen({super.key});
 
   @override
-  State<TimeTable> createState() => _TimeTableState();
+  State<TimeTableScreen> createState() => _TimeTableScreenState();
 }
 
-class _TimeTableState extends State<TimeTable> {
+class _TimeTableScreenState extends State<TimeTableScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
