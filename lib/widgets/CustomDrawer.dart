@@ -116,7 +116,7 @@ class CustomDrawer extends StatelessWidget {
               Navigator.push(
                 context,
                 MaterialPageRoute(
-                  builder: (context) => const TeachersScreen(),
+                  builder: (context) => TeachersScreen(),
                 ),
               );
 
@@ -126,7 +126,7 @@ class CustomDrawer extends StatelessWidget {
               Navigator.push(
                 context,
                 MaterialPageRoute(
-                  builder: (context) => const RecordingsScreen(),
+                  builder: (context) =>  RecordingsScreen(),
                 ),
               );
 
