@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_reminder/services/UiProvider.dart';
 import 'package:provider/provider.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class SettingScreen extends StatefulWidget {
   final String title;
@@ -12,6 +13,32 @@ class SettingScreen extends StatefulWidget {
 }
 
 class _SettingScreenState extends State<SettingScreen> {
+
+  // Function to launch email app to compose an email
+  void _launchEmail() async {
+    final Uri emailUri = Uri(
+      scheme: 'mailto',
+      path: 'support@example.com',  // The recipient's email address
+      queryParameters: {
+        'subject': 'I need help with the app',  // Default subject
+        'body': 'Hello, I have a question or feedback.',  // Default body text
+        'cc': 'cc@example.com',  // CC email (optional)
+      },
+      // query: 'subject=App Feedback&body=App Version 3.23',
+    );
+
+    try {
+      if (await canLaunch(emailUri.toString())) {
+        await launch(emailUri.toString());
+      } else {
+        print("Error: Could not open email client.");
+      }
+    } catch (e) {
+      print('Error launching email client: $e');
+    }
+  }
+
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -88,6 +115,7 @@ class _SettingScreenState extends State<SettingScreen> {
                 subtitle: Text("If you are enjoying School Planner, please leave a review on the Play Store"),
               ),
               ListTile(
+                onTap: _launchEmail,
                 leading: Icon(Icons.contact_mail),
                 title: Text("Contact Us"),
                 subtitle: Text("If you need help or have some advice"),
