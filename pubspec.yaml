@@ -43,6 +43,7 @@ dependencies:
   record: ^5.0.4  # Check for the latest version on pub.dev
   permission_handler: ^11.0.1  # Check latest version on pub.dev
   audioplayers: ^6.1.1
+  flutter_launcher_icons: ^0.14.3
 
 
 dev_dependencies:
