@@ -9,7 +9,7 @@
     <uses-permission android:name="android.permission.READ_MEDIA_AUDIO"/>
 
     <application
-        android:label="flutter_reminder"
+        android:label="SJC Remainder"
         android:name="${applicationName}"
         android:icon="@mipmap/ic_launcher">
 
