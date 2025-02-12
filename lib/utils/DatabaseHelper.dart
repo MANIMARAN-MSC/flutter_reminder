@@ -20,7 +20,7 @@ class DatabaseHelper {
 
     return openDatabase(
       path,
-      version: 1,
+      version: 2, // Increment version to alter table
       onCreate: (db, version) async {
         await db.execute('''
           CREATE TABLE events(
@@ -29,9 +29,34 @@ class DatabaseHelper {
             event TEXT
           )
         ''');
+        await db.execute('''
+          CREATE TABLE teachers(
+            id INTEGER PRIMARY KEY AUTOINCREMENT,
+            name TEXT,
+            phone TEXT,
+            email TEXT,
+            address TEXT,
+            imagePath TEXT
+          )
+        ''');
+      },
+      onUpgrade: (db, oldVersion, newVersion) async {
+        if (oldVersion < 2) {
+          await db.execute('''
+            CREATE TABLE teachers(
+              id INTEGER PRIMARY KEY AUTOINCREMENT,
+              name TEXT,
+              phone TEXT,
+              email TEXT,
+              address TEXT,
+              imagePath TEXT
+            )
+          ''');
+        }
       },
     );
   }
+
 
   Future<void> insertEvent(String date, String event) async {
     final db = await database;
@@ -50,5 +75,33 @@ class DatabaseHelper {
   Future<void> deleteEvent(int id) async {
     final db = await database;
     await db.delete('events', where: 'id = ?', whereArgs: [id]);
+  }
+
+  // Insert teacher
+  Future<int> insertTeacher(Map<String, dynamic> teacher) async {
+    final db = await database;
+    return await db.insert("teachers", teacher);
+  }
+
+  // Fetch all teachers
+  Future<List<Map<String, dynamic>>> getTeachers() async {
+    final db = await database;
+    return await db.query("teachers");
+  }
+
+  Future<void> updateTeacher(int id, Map<String, dynamic> teacher) async {
+    final db = await database;
+    await db.update(
+      "teachers",
+      teacher,
+      where: "id = ?",
+      whereArgs: [id],
+    );
+  }
+
+  // Delete a teacher by ID
+  Future<void> deleteTeacher(int id) async {
+    final db = await database;
+    await db.delete("teachers", where: "id = ?", whereArgs: [id]);
   }
 }

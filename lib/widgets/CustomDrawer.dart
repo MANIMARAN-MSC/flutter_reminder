@@ -9,12 +9,37 @@ import 'package:flutter_reminder/screens/OverViewScreen.dart';
 import 'package:flutter_reminder/screens/RecordingsScreen.dart';
 import 'package:flutter_reminder/screens/RemoveAdsScreen.dart';
 import 'package:flutter_reminder/screens/SubjectScreen.dart';
-import 'package:flutter_reminder/screens/TeachersScreen.dart';
 import 'package:flutter_reminder/screens/TimeTableScreen.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 import '../screens/SettingScreen.dart';
+import '../screens/teacher/TeacherScreen.dart';
 
 class CustomDrawer extends StatelessWidget {
+
+  void _launchEmail() async {
+    final Uri emailUri = Uri(
+      scheme: 'mailto',
+      path: 'support@example.com',  // The recipient's email address
+      queryParameters: {
+        'subject': 'I need help with the app',  // Default subject
+        'body': 'Hello, I have a question or feedback.',  // Default body text
+        'cc': 'cc@example.com',  // CC email (optional)
+      },
+      // query: 'subject=App Feedback&body=App Version 3.23',
+    );
+
+    try {
+      if (await canLaunch(emailUri.toString())) {
+        await launch(emailUri.toString());
+      } else {
+        print("Error: Could not open email client.");
+      }
+    } catch (e) {
+      print('Error launching email client: $e');
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Drawer(
@@ -116,7 +141,7 @@ class CustomDrawer extends StatelessWidget {
               Navigator.push(
                 context,
                 MaterialPageRoute(
-                  builder: (context) => TeachersScreen(),
+                  builder: (context) => TeacherScreen(),
                 ),
               );
 
@@ -154,12 +179,14 @@ class CustomDrawer extends StatelessWidget {
             }),
             _createDrawerItem(icon: Icons.help_outline, text: 'Help and Feedback', onTap: () {
 
-              Navigator.push(
-                context,
-                MaterialPageRoute(
-                  builder: (context) => const HelpAndFeedbackScreen(),
-                ),
-              );
+              // Navigator.push(
+              //   context,
+              //   MaterialPageRoute(
+              //     builder: (context) => const HelpAndFeedbackScreen(),
+              //   ),
+              // );
+
+              _launchEmail();
 
             }),
             _createDrawerItem(icon: Icons.settings, text: 'Settings', onTap: () {
